@@ -15,12 +15,12 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'javax.validation:validation-api:2.0.1.Final'
 	implementation 'com.rabbitmq:amqp-client:5.8.0'
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
-	compile('javax.xml.bind:jaxb-api:2.3.0')
 }
 
 test {

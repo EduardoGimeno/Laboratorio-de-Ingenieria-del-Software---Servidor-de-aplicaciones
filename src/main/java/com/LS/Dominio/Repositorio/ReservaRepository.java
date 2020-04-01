@@ -15,6 +15,8 @@ package com.LS.Dominio.Repositorio;
 import com.LS.Dominio.Entidad.Reserva;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ReservaRepository extends CrudRepository<Reserva, Integer> {
+import java.util.UUID;
+
+public interface ReservaRepository extends CrudRepository<Reserva, UUID> {
 
 }
