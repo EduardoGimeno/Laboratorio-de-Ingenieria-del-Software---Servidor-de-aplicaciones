@@ -6,27 +6,33 @@
  * Esta clase reprensenta el objeto valor Equipamiento
  *
  * @author Gonzalo Berné
- * @version 1.0, 30/03/2020
+ * @author Eduardo Gimeno
+ * @version 2.0, 01/04/2020
  */
 
 package com.LS.Dominio.ObjetoValor;
 
+import javax.validation.constraints.NotNull;
+
 public class Equipamiento {
 
-    private String tipo;
+    @NotNull
+    private TipoEquipamiento tipo;
 
+    @NotNull
     private int cantidad;
 
+    @NotNull
     private int maxCantidad;
 
-    public Equipamiento(String tipo, int cantidad, int maxCantidad) {
+    public Equipamiento(TipoEquipamiento tipo, int cantidad, int maxCantidad) {
         this.tipo = tipo;
         this.cantidad = cantidad;
         this.maxCantidad = maxCantidad;
     }
 
     public String getTipo() {
-        return tipo;
+        return tipo.getNombre();
     }
 
     public int getCantidad() {

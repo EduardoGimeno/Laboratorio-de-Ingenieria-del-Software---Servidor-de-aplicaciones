@@ -16,9 +16,10 @@ import com.LS.Dominio.Entidad.Espacio;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 
-public interface EspacioRepository extends CrudRepository<Espacio, Integer> {
+public interface EspacioRepository extends CrudRepository<Espacio, UUID> {
 
     Optional<Espacio> findById (String id);
 }
