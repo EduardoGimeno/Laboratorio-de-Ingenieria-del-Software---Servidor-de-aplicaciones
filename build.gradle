@@ -19,6 +19,7 @@ dependencies {
 	implementation 'javax.validation:validation-api:2.0.1.Final'
 	implementation 'com.rabbitmq:amqp-client:5.8.0'
 	implementation 'com.github.UNIZAR-30249-2020-GRUPO02:DTO:-SNAPSHOT'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.3'
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

@@ -35,23 +35,22 @@ public class Espacio {
     @Min(0)
     private int capacidad;
 
-    /*@NotNull
+    @NotNull
     @Embedded
-    @OneToMany
     private List<Equipamiento> equipamiento;
-    */
 
-    /*@NotNull
-    private Ubicacion ubicacion;*/
+    @NotNull
+    @Embedded
+    private Ubicacion ubicacion;
 
-    public Espacio(String id, String tipo, int capacidad, // List<Equipamiento> equipamiento,
+    /*public Espacio(String id, String tipo, int capacidad, // List<Equipamiento> equipamiento,
                    Ubicacion ubicacion) {
         this.tipo = tipo;
         this.capacidad = capacidad;
         // this.equipamiento = equipamiento;
         //this.ubicacion = ubicacion;
         this.id = UUID.fromString(id);
-    }
+    }*/
 
     public UUID getId() {
         return this.id;
@@ -65,12 +64,12 @@ public class Espacio {
         return this.capacidad;
     }
 
-    /*public List<Equipamiento> getEquipamiento() {
+    public List<Equipamiento> getEquipamiento() {
         return this.equipamiento;
     }
-    */
 
-    /*public Ubicacion getUbicacion() {
+
+    public Ubicacion getUbicacion() {
         return this.ubicacion;
-    }*/
+    }
 }

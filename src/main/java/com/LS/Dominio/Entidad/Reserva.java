@@ -95,8 +95,8 @@ public class Reserva {
         return this.dias;
     }*/
 
-    public String getEstado() {
-        return this.estado.getEstado();
+    public EstadoReserva getEstado() {
+        return this.estado;
     }
 
     public Usuario getUsuario() {
