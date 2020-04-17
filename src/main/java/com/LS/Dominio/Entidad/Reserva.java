@@ -12,8 +12,8 @@
 
 package com.LS.Dominio.Entidad;
 
-import com.LS.Dominio.ObjetoValor.Usuario;
-import com.LS.Dominio.ObjetoValor.EstadoReserva;
+import ObjetoValor.Usuario;
+import ObjetoValor.EstadoReserva;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;

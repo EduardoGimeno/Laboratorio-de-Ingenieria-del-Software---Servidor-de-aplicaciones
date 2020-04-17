@@ -12,8 +12,8 @@
 
 package com.LS.Dominio.Entidad;
 
-import com.LS.Dominio.ObjetoValor.Equipamiento;
-import com.LS.Dominio.ObjetoValor.Ubicacion;
+import ObjetoValor.Equipamiento;
+import ObjetoValor.Ubicacion;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -41,15 +41,15 @@ public class Espacio {
     private List<Equipamiento> equipamiento;
     */
 
-    @NotNull
-    private Ubicacion ubicacion;
+    /*@NotNull
+    private Ubicacion ubicacion;*/
 
     public Espacio(String id, String tipo, int capacidad, // List<Equipamiento> equipamiento,
                    Ubicacion ubicacion) {
         this.tipo = tipo;
         this.capacidad = capacidad;
         // this.equipamiento = equipamiento;
-        this.ubicacion = ubicacion;
+        //this.ubicacion = ubicacion;
         this.id = UUID.fromString(id);
     }
 
@@ -70,7 +70,7 @@ public class Espacio {
     }
     */
 
-    public Ubicacion getUbicacion() {
+    /*public Ubicacion getUbicacion() {
         return this.ubicacion;
-    }
+    }*/
 }
