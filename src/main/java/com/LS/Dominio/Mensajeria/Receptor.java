@@ -1,9 +1,9 @@
 package com.LS.Dominio.Mensajeria;
 
 import DTO.ReservaDTO;
+import com.LS.Dominio.Entidad.Reserva;
 import com.LS.Dominio.Parser.ReservaParser;
 import com.LS.Dominio.Servicio.GestionReservas;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.rabbitmq.client.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +49,11 @@ public class Receptor{
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             String mensaje = new String(delivery.getBody(), StandardCharsets.UTF_8);
             log.info(" [x] Recibido: '"+ mensaje + "'");
-            llamarAServicio(mensaje);
+            try {
+                llamarAServicio(mensaje);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         };
         canal.basicConsume(COLA_ENTRADA, true, deliverCallback, consumerTag -> { });
         log.info("Esperando mensajes...");
@@ -62,13 +66,17 @@ public class Receptor{
 
     public void llamarAServicio(String mensaje) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        String mensajeArray[] = mensaje.split(",", 2);
+        String[] mensajeArray = mensaje.split(",", 2);
 
         switch (mensajeArray[0]) {
             case "crearReserva":
                 devolverMensajes(mapper.writeValueAsString(reservaParser
                         .entidadADTO(gestionReservas.crear(reservaParser
                         .DTOAEntidad(mapper.readValue(mensajeArray[1], ReservaDTO.class))))));
+            break;
+
+            default:
+                devolverMensajes("Mensaje mal formado");
             break;
         }
     }

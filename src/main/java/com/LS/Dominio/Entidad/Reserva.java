@@ -44,7 +44,7 @@ public class Reserva {
     //private Boolean dias;
 
     @NotNull
-    private EstadoReserva estado;
+    private String estado;
 
     @NotNull
     @Embedded
@@ -53,7 +53,7 @@ public class Reserva {
     @NotNull
     private UUID idEspacio;
 
-    private final int diasLectivos = 5;
+    //private final int diasLectivos = 5;
 
     public Reserva(Timestamp horaInicio, Timestamp horaFin, Timestamp fechaInicio, Timestamp fechaFin,
                    /*Boolean[] dias,*/ EstadoReserva estado, Usuario usuario, UUID idEspacio) {
@@ -65,11 +65,13 @@ public class Reserva {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         // this.dias = dias;
-        this.estado = estado;
+        this.estado = estado.getEstado();
         this.usuario = usuario;
         this.idEspacio = idEspacio;
         this.id = UUID.randomUUID();
     }
+
+    public Reserva() {}
 
     public UUID getId() {
         return this.id;
@@ -96,7 +98,12 @@ public class Reserva {
     }*/
 
     public EstadoReserva getEstado() {
-        return this.estado;
+        if (this.estado.equals(EstadoReserva.ACEPTADA.getEstado())) {
+            return EstadoReserva.ACEPTADA;
+        } else if (this.estado.equals(EstadoReserva.PENDIENTE.getEstado())) {
+            return EstadoReserva.PENDIENTE;
+        }
+        return EstadoReserva.RECHAZADA;
     }
 
     public Usuario getUsuario() {

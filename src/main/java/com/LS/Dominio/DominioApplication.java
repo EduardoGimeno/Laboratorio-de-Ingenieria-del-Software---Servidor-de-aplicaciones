@@ -14,7 +14,7 @@ public class DominioApplication {
 
 	@Bean
 	public void conexionBroker() throws Exception {
-		//receptor.esperarMensajes();
+			receptor.esperarMensajes();
 	}
 
 	public static void main(String[] args) {

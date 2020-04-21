@@ -2,7 +2,9 @@ package com.LS.Dominio.Parser;
 
 import DTO.ReservaDTO;
 import com.LS.Dominio.Entidad.Reserva;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ReservaParser {
 
     public ReservaDTO entidadADTO (Reserva reserva) {
