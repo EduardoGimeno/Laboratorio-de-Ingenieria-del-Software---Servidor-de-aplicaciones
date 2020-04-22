@@ -1,10 +1,14 @@
 package com.LS.Dominio.Mensajeria;
 
-import DTO.ReservaDTO;
-import com.LS.Dominio.Entidad.Reserva;
+import DTO.*;
+import ObjetoValor.EstadoReserva;
+import com.LS.Dominio.Entidad.*;
 import com.LS.Dominio.Parser.ReservaParser;
-import com.LS.Dominio.Servicio.GestionReservas;
+import com.LS.Dominio.Servicio.*;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.rabbitmq.client.*;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +16,20 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class Receptor{
 
     @Autowired
     GestionReservas gestionReservas;
+
+    @Autowired
+    ObtenerReservas obtenerReservas;
 
     @Autowired
     ReservaParser reservaParser;
@@ -66,6 +78,8 @@ public class Receptor{
 
     public void llamarAServicio(String mensaje) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
+        JSONObject jsonObject;
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         String[] mensajeArray = mensaje.split(",", 2);
 
         switch (mensajeArray[0]) {
@@ -73,6 +87,41 @@ public class Receptor{
                 devolverMensajes(mapper.writeValueAsString(reservaParser
                         .entidadADTO(gestionReservas.crear(reservaParser
                         .DTOAEntidad(mapper.readValue(mensajeArray[1], ReservaDTO.class))))));
+            break;
+
+            case "modificarEstadoReserva":
+                jsonObject = new JSONObject(mensajeArray[1]);
+                Optional<Reserva> reservaOptional = gestionReservas.cambiarEstado(
+                        jsonObject.getString("id"),
+                        EstadoReserva.valueOf(jsonObject.getString("estado")),
+                        jsonObject.getString("motivo"));
+                if (reservaOptional.isPresent()) {
+                    devolverMensajes(mapper.writeValueAsString(
+                            reservaParser.entidadADTO(reservaOptional.get())));
+                } else {
+                    devolverMensajes("ERROR");
+                }
+            break;
+
+            case "obtenerReservasEspacio":
+                jsonObject = new JSONObject(mensajeArray[1]);
+                Collection<Reserva> reservasEspacio = obtenerReservas
+                        .obtenerReservasEspacio(jsonObject.getString("idEspacio"));
+                devolverMensajes(mapper.writeValueAsString(reservasEspacio
+                        .stream()
+                        .map(reservaParser::entidadADTO)
+                        .collect(Collectors.toList())));
+            break;
+
+            case "obtenerReservasEspacioFecha":
+                jsonObject = new JSONObject(mensajeArray[1]);
+                Collection<Reserva> reservasEspacioFecha = obtenerReservas
+                        .obtenerReservasEspacioFecha(jsonObject.getString("idEspacio"),
+                                new Timestamp(jsonObject.getLong("fecha")));
+                devolverMensajes(mapper.writeValueAsString(reservasEspacioFecha
+                        .stream()
+                        .map(reservaParser::entidadADTO)
+                        .collect(Collectors.toList())));
             break;
 
             default:

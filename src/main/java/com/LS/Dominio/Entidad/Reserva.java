@@ -18,7 +18,6 @@ import ObjetoValor.EstadoReserva;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -27,7 +26,7 @@ import java.util.UUID;
 public class Reserva {
 
     @Id
-    private UUID id;
+    private String id;
 
     @NotNull
     private Timestamp horaInicio;
@@ -51,12 +50,12 @@ public class Reserva {
     private Usuario usuario;
 
     @NotNull
-    private UUID idEspacio;
+    private String idEspacio;
 
     //private final int diasLectivos = 5;
 
     public Reserva(Timestamp horaInicio, Timestamp horaFin, Timestamp fechaInicio, Timestamp fechaFin,
-                   /*Boolean[] dias,*/ EstadoReserva estado, Usuario usuario, UUID idEspacio) {
+                   /*Boolean[] dias,*/ EstadoReserva estado, Usuario usuario, String idEspacio) {
        /* if (dias != null) {
             assert dias.length == diasLectivos;
         }*/
@@ -68,12 +67,12 @@ public class Reserva {
         this.estado = estado.getEstado();
         this.usuario = usuario;
         this.idEspacio = idEspacio;
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
     }
 
     public Reserva() {}
 
-    public UUID getId() {
+    public String getId() {
         return this.id;
     }
 
@@ -97,6 +96,10 @@ public class Reserva {
         return this.dias;
     }*/
 
+    public void setEstado(EstadoReserva estado) {
+        this.estado = estado.getEstado();
+    }
+
     public EstadoReserva getEstado() {
         if (this.estado.equals(EstadoReserva.ACEPTADA.getEstado())) {
             return EstadoReserva.ACEPTADA;
@@ -110,7 +113,7 @@ public class Reserva {
         return this.usuario;
     }
 
-    public UUID getIdEspacio() {
+    public String getIdEspacio() {
         return this.idEspacio;
     }
 }

@@ -26,7 +26,7 @@ import java.util.UUID;
 public class Espacio {
 
     @Id
-    private UUID id;
+    private String id;
 
     @NotNull
     private String tipo;
@@ -52,7 +52,7 @@ public class Espacio {
         this.id = UUID.fromString(id);
     }*/
 
-    public UUID getId() {
+    public String getId() {
         return this.id;
     }
 

@@ -35,6 +35,8 @@ public class Gerente {
         this.contrasena = contrasena;
     }
 
+    public Gerente () {}
+
     public String getNombre() {
         return this.nombre;
     }
