@@ -12,15 +12,18 @@
 
 package com.LS.Dominio.Entidad;
 
+import ObjetoValor.Dia;
 import ObjetoValor.Usuario;
 import ObjetoValor.EstadoReserva;
+import org.springframework.aop.support.DefaultIntroductionAdvisor;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 public class Reserva {
@@ -40,7 +43,9 @@ public class Reserva {
     @NotNull
     private Timestamp fechaFin;
 
-    //private Boolean dias;
+    @NotNull
+    @ElementCollection(targetClass=Integer.class, fetch=FetchType.EAGER)
+    private List<Integer> dias = new ArrayList<>();
 
     @NotNull
     private String estado;
@@ -52,18 +57,13 @@ public class Reserva {
     @NotNull
     private String idEspacio;
 
-    //private final int diasLectivos = 5;
-
     public Reserva(Timestamp horaInicio, Timestamp horaFin, Timestamp fechaInicio, Timestamp fechaFin,
-                   /*Boolean[] dias,*/ EstadoReserva estado, Usuario usuario, String idEspacio) {
-       /* if (dias != null) {
-            assert dias.length == diasLectivos;
-        }*/
+                   List<Integer> dias, EstadoReserva estado, Usuario usuario, String idEspacio) {
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        // this.dias = dias;
+        this.dias = dias;
         this.estado = estado.getEstado();
         this.usuario = usuario;
         this.idEspacio = idEspacio;
@@ -92,9 +92,24 @@ public class Reserva {
         return this.fechaFin;
     }
 
-   /* public Boolean[] getDias() {
-        return this.dias;
-    }*/
+    public List<Dia> getDias() {
+        return this.dias.stream()
+                .map(this::getDia)
+                .collect(Collectors.toList());
+    }
+
+    public Dia getDia(Integer dia) {
+        if (dia.equals(Dia.LUNES.getDia())) {
+            return Dia.LUNES;
+        } else if (dia.equals(Dia.MARTES.getDia())) {
+            return Dia.MARTES;
+        } else if (dia.equals(Dia.MIERCOLES.getDia())) {
+            return Dia.MIERCOLES;
+        } else if (dia.equals(Dia.JUEVES.getDia())) {
+            return Dia.JUEVES;
+        }
+        return Dia.VIERNES;
+    }
 
     public void setEstado(EstadoReserva estado) {
         this.estado = estado.getEstado();

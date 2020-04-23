@@ -18,12 +18,18 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.List;
 
 public interface ReservaRepository extends CrudRepository<Reserva, String> {
 
-    Collection<Reserva> findByIdEspacio(String idEspacio);
+    List<Reserva> findByIdEspacio(String idEspacio);
 
+    // ??
     @Query(value = "SELECT r FROM Reserva r WHERE r.idEspacio = ?1 " +
             "AND r.horaInicio > ?2 AND r.horaInicio < ?3")
-    Collection<Reserva> findByIdEspacioFecha(String idEspacio, Timestamp dia, Timestamp diaSiguiente);
+    List<Reserva> findByIdEspacioYEntreDosFechas(String idEspacio, Timestamp dia, Timestamp diaSiguiente);
+
+    @Query(value = "SELECT r FROM Reserva r WHERE r.idEspacio = ?1 " +
+            "AND r.fechaInicio <= ?2 AND r.fechaFin >= ?2 AND ?3 MEMBER OF r.dias")
+    List<Reserva> findByIdEspacioYDia(String idEspacio, Timestamp dia, Integer diaSemana);
 }

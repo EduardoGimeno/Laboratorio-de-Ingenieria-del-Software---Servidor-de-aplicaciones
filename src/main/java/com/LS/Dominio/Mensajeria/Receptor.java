@@ -1,6 +1,7 @@
 package com.LS.Dominio.Mensajeria;
 
 import DTO.*;
+import ObjetoValor.Dia;
 import ObjetoValor.EstadoReserva;
 import com.LS.Dominio.Entidad.*;
 import com.LS.Dominio.Parser.ReservaParser;
@@ -14,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
@@ -30,6 +33,9 @@ public class Receptor{
 
     @Autowired
     ObtenerReservas obtenerReservas;
+
+    @Autowired
+    ObtenerHorarios obtenerHorarios;
 
     @Autowired
     ReservaParser reservaParser;
@@ -113,16 +119,27 @@ public class Receptor{
                         .collect(Collectors.toList())));
             break;
 
+            //??
             case "obtenerReservasEspacioFecha":
                 jsonObject = new JSONObject(mensajeArray[1]);
                 Collection<Reserva> reservasEspacioFecha = obtenerReservas
-                        .obtenerReservasEspacioFecha(jsonObject.getString("idEspacio"),
+                        .obtenerPorEspacioYFecha(jsonObject.getString("idEspacio"),
                                 new Timestamp(jsonObject.getLong("fecha")));
                 devolverMensajes(mapper.writeValueAsString(reservasEspacioFecha
                         .stream()
                         .map(reservaParser::entidadADTO)
                         .collect(Collectors.toList())));
             break;
+
+            // PROBAR MAÑANA
+            case "obtenerHorarioEntreFechas":
+                jsonObject = new JSONObject(mensajeArray[1]);
+                Collection<HorarioDTO> horarioEntreFechas = obtenerHorarios
+                        .obtenerPorEspacioEntreFechas(jsonObject.getString("idEspacio"),
+                                new Timestamp(jsonObject.getLong("fechaInicio")),
+                                new Timestamp(jsonObject.getLong("fechaFin")));
+                devolverMensajes(mapper.writeValueAsString(horarioEntreFechas));
+                break;
 
             default:
                 devolverMensajes("Mensaje mal formado");
