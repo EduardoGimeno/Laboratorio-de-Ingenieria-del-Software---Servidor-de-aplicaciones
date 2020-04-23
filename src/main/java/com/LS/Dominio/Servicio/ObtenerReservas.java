@@ -12,7 +12,6 @@
 
 package com.LS.Dominio.Servicio;
 
-import ObjetoValor.Dia;
 import com.LS.Dominio.Entidad.Reserva;
 import com.LS.Dominio.Repositorio.ReservaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.List;
 
 @Service

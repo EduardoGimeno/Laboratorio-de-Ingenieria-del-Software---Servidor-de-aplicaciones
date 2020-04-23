@@ -13,18 +13,13 @@
 package com.LS.Dominio.Servicio;
 
 import DTO.HorarioDTO;
-import ObjetoValor.Dia;
-import com.LS.Dominio.Entidad.Reserva;
 import com.LS.Dominio.Parser.ReservaParser;
-import com.LS.Dominio.Repositorio.ReservaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -36,10 +31,9 @@ public class ObtenerHorarios {
     @Autowired
     private ObtenerReservas obtenerReservas;
 
-    // PROBAR MAÑANA
     public List<HorarioDTO> obtenerPorEspacioEntreFechas (String idEspacio, Timestamp fechaInicio, Timestamp fechaFin) {
         List<HorarioDTO> horarios = new ArrayList<>();
-        int dias = fechaInicio.getDate() - fechaFin.getDate();
+        int dias = fechaFin.getDate() - fechaInicio.getDate();
         Timestamp dia = new Timestamp(fechaInicio.getYear(), fechaInicio.getMonth(),
                 fechaInicio.getDate(), 0, 0, 0, 0);
         Calendar cal = Calendar.getInstance();
@@ -52,8 +46,8 @@ public class ObtenerHorarios {
     }
 
     public HorarioDTO obtenerPorEspacioYDia (String idEspacio, Timestamp dia) {
-        return reservaParser.ListaAHorarioDTO(obtenerReservas
-                .obtenerPorEspacioFechaYDia(idEspacio, dia));
+        return reservaParser.ListaReservasAHorarioDTO(idEspacio, obtenerReservas
+                .obtenerPorEspacioFechaYDia(idEspacio, dia), dia);
     }
 
 }

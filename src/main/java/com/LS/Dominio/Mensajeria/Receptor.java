@@ -131,14 +131,12 @@ public class Receptor{
                         .collect(Collectors.toList())));
             break;
 
-            // PROBAR MAÑANA
             case "obtenerHorarioEntreFechas":
                 jsonObject = new JSONObject(mensajeArray[1]);
-                Collection<HorarioDTO> horarioEntreFechas = obtenerHorarios
+                devolverMensajes(mapper.writeValueAsString(obtenerHorarios
                         .obtenerPorEspacioEntreFechas(jsonObject.getString("idEspacio"),
                                 new Timestamp(jsonObject.getLong("fechaInicio")),
-                                new Timestamp(jsonObject.getLong("fechaFin")));
-                devolverMensajes(mapper.writeValueAsString(horarioEntreFechas));
+                                new Timestamp(jsonObject.getLong("fechaFin")))));
                 break;
 
             default:

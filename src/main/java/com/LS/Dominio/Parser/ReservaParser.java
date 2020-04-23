@@ -31,16 +31,18 @@ public class ReservaParser {
                 dto.getEstado(), dto.getUsuario(), dto.getIdEspacio());
     }
 
-    public HorarioDTO ListaAHorarioDTO(List<Reserva> reservas) {
+    public HorarioDTO ListaReservasAHorarioDTO(String idEspacio, List<Reserva> reservas, Timestamp dia) {
         HorarioDTO horario = new HorarioDTO();
-        horario.setIdEspacio(reservas.get(0).getIdEspacio());
-        horario.setHoraInicio(new Timestamp(0,0,0,8,0,0,0));
-        horario.setHoraFin(new Timestamp(0,0,0,21,0,0,0));
-        for (Reserva reserva: reservas) {
-            Integer horas = reserva.getHoraInicio().getHours() - reserva.getHoraFin().getHours();
-            for (int i = 0; i <= horas; i++) {
-                horario.addHoraOcupada(new Timestamp(0,0,0,horas + i,
-                        0,0,0));
+        horario.setIdEspacio(idEspacio);
+        horario.setDia(dia);
+        horario.setHoraInicio(8);
+        horario.setHoraFin(21);
+        if (reservas != null) {
+            for (Reserva reserva : reservas) {
+                Integer horas = reserva.getHoraFin().getHours() - reserva.getHoraInicio().getHours();
+                for (int i = 0; i <= horas; i++) {
+                    horario.addHoraOcupada(reserva.getHoraInicio().getHours() + i);
+                }
             }
         }
         return horario;
