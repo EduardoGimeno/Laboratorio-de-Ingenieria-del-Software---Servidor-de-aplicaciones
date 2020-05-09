@@ -17,7 +17,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.List;
 
 public interface ReservaRepository extends CrudRepository<Reserva, String> {

@@ -1,3 +1,15 @@
+/*
+ * ReservaParser.java 1.0 ??/??/2020
+ */
+
+/**
+ * Esta clase contiene los servicios que parsean la entidad Reserva
+ *   a ReservaDTO y viceversa. Tambien a objeto HorarioDTO
+ *
+ * @author Gonzalo Berné
+ * @version 1.0, ??/??/2020
+ */
+
 package com.LS.Dominio.Parser;
 
 import DTO.HorarioDTO;

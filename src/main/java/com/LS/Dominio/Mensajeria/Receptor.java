@@ -1,9 +1,9 @@
 package com.LS.Dominio.Mensajeria;
 
 import DTO.*;
-import ObjetoValor.Dia;
 import ObjetoValor.EstadoReserva;
 import com.LS.Dominio.Entidad.*;
+import com.LS.Dominio.Parser.EspacioParser;
 import com.LS.Dominio.Parser.ReservaParser;
 import com.LS.Dominio.Servicio.*;
 
@@ -15,14 +15,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +35,16 @@ public class Receptor{
     ObtenerHorarios obtenerHorarios;
 
     @Autowired
+    ObtenerEspacios obtenerEspacios;
+
+    @Autowired
+    ModificarEspacio modificarEspacio;
+
+    @Autowired
     ReservaParser reservaParser;
+
+    @Autowired
+    EspacioParser espacioParser;
 
     private Logger log = LoggerFactory.getLogger(Receptor.class);
 
@@ -137,6 +143,61 @@ public class Receptor{
                         .obtenerPorEspacioEntreFechas(jsonObject.getString("idEspacio"),
                                 new Timestamp(jsonObject.getLong("fechaInicio")),
                                 new Timestamp(jsonObject.getLong("fechaFin")))));
+                break;
+
+            case "obtenerEspacioPorId:":
+                jsonObject = new JSONObject(mensajeArray[1]);
+                Optional<Espacio> espacioOptional = obtenerEspacios
+                        .obtenerInformacion(jsonObject.getString("id"));
+                if (espacioOptional.isPresent()) {
+                    devolverMensajes(mapper.writeValueAsString(espacioParser.
+                            entidadADTO(espacioOptional.get())));
+                } else {
+                    devolverMensajes("ERROR");
+                }
+                break;
+
+            case "obtenerEspacioPorEdificioYTipo:":
+                jsonObject = new JSONObject(mensajeArray[1]);
+                Collection<Espacio> espaciosPorEdificioYTipo = obtenerEspacios
+                        .obtenerPorEdificioYTipo(jsonObject.getString("edificio"),
+                                jsonObject.getString("tipo"));
+                devolverMensajes(mapper.writeValueAsString(espaciosPorEdificioYTipo
+                        .stream()
+                        .map(espacioParser::entidadADTO)
+                        .collect(Collectors.toList())));
+                break;
+
+            case "modificarEspacio:":
+                jsonObject = new JSONObject(mensajeArray[1]);
+                try {
+
+                    Optional<Integer> capacidad;
+                    if (jsonObject.getString("capacidad").equals("null")) {
+                        capacidad = Optional.empty();
+                    } else {
+                        capacidad = Optional.of(Integer.parseInt(jsonObject.getString("capacidad")));
+                    }
+
+                    Optional<String> notas;
+                    if (jsonObject.getString("notas").equals("null")) {
+                        notas = Optional.empty();
+                    } else {
+                        notas = Optional.of(jsonObject.getString("notas"));
+                    }
+
+                    Optional<Espacio> espacioModificadoOptional = modificarEspacio
+                            .modificar(jsonObject.getString("id"),
+                                    capacidad, notas);
+                    if (espacioModificadoOptional.isPresent()) {
+                        devolverMensajes(mapper.writeValueAsString(espacioParser.
+                                entidadADTO(espacioModificadoOptional.get())));
+                    } else {
+                        devolverMensajes("ERROR");
+                    }
+                } catch (Exception e){
+                    devolverMensajes("ERROR");
+                }
                 break;
 
             default:

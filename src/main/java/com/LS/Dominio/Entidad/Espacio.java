@@ -20,7 +20,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 @Entity
 public class Espacio {
@@ -43,13 +43,15 @@ public class Espacio {
     @Embedded
     private Ubicacion ubicacion;
 
+    private String notas;
+
     /*public Espacio(String id, String tipo, int capacidad, // List<Equipamiento> equipamiento,
                    Ubicacion ubicacion) {
         this.tipo = tipo;
         this.capacidad = capacidad;
         // this.equipamiento = equipamiento;
-        //this.ubicacion = ubicacion;
-        this.id = UUID.fromString(id);
+        this.ubicacion = ubicacion;
+        this.id = id;
     }*/
 
     public String getId() {
@@ -68,8 +70,20 @@ public class Espacio {
         return this.equipamiento;
     }
 
-
     public Ubicacion getUbicacion() {
         return this.ubicacion;
+    }
+
+    public String getNotas() {
+        return this.notas;
+    }
+
+    public void modificar (Optional<Integer> capacidad, Optional<String> notas) {
+        if (capacidad.isPresent()) {
+            this.capacidad = capacidad.get();
+        }
+        if (notas.isPresent()) {
+            this.notas = notas.get();
+        }
     }
 }
