@@ -31,6 +31,6 @@ public class ObtenerEspacios {
     }
 
     public List<Espacio> obtenerPorEdificioYTipo(String edificio, String tipo) {
-        return espacioRepository.findByEdificioYTipo(edificio, tipo);
+        return espacioRepository.findByUbicacionEdificioAndTipo(edificio, tipo);
     }
 }

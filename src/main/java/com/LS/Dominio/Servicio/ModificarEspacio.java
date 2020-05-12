@@ -12,6 +12,7 @@
 
 package com.LS.Dominio.Servicio;
 
+import DTO.DatosDTO;
 import com.LS.Dominio.Entidad.Espacio;
 import com.LS.Dominio.Repositorio.EspacioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +29,10 @@ public class ModificarEspacio {
     @Autowired
     private ObtenerEspacios obtenerEspacios;
 
-    public Optional<Espacio> modificar(String id, Optional<Integer> capacidad, Optional<String> notas) {
-        Optional<Espacio> espacioOptional = obtenerEspacios.obtenerInformacion(id);
+    public Optional<Espacio> modificar(DatosDTO datos) {
+        Optional<Espacio> espacioOptional = obtenerEspacios.obtenerInformacion(datos.getId());
         if (espacioOptional.isPresent()) {
-            espacioOptional.get().modificar(capacidad, notas);
+            espacioOptional.get().modificar(datos.getCapacidad(), datos.getNotas());
             return Optional.of(espacioRepository.save(espacioOptional.get()));
         } else {
             return Optional.empty();

@@ -78,12 +78,8 @@ public class Espacio {
         return this.notas;
     }
 
-    public void modificar (Optional<Integer> capacidad, Optional<String> notas) {
-        if (capacidad.isPresent()) {
-            this.capacidad = capacidad.get();
-        }
-        if (notas.isPresent()) {
-            this.notas = notas.get();
-        }
+    public void modificar (int capacidad, String notas) {
+        this.capacidad = capacidad;
+        this.notas = notas;
     }
 }

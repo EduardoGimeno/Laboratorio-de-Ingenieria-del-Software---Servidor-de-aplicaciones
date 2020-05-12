@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -39,6 +40,9 @@ public class Receptor{
 
     @Autowired
     ModificarEspacio modificarEspacio;
+
+    @Autowired
+    FiltrarBusquedaEspacios filtrarBusquedaEspacios;
 
     @Autowired
     ReservaParser reservaParser;
@@ -169,35 +173,23 @@ public class Receptor{
                 break;
 
             case "modificarEspacio:":
-                jsonObject = new JSONObject(mensajeArray[1]);
-                try {
-
-                    Optional<Integer> capacidad;
-                    if (jsonObject.getString("capacidad").equals("null")) {
-                        capacidad = Optional.empty();
-                    } else {
-                        capacidad = Optional.of(Integer.parseInt(jsonObject.getString("capacidad")));
-                    }
-
-                    Optional<String> notas;
-                    if (jsonObject.getString("notas").equals("null")) {
-                        notas = Optional.empty();
-                    } else {
-                        notas = Optional.of(jsonObject.getString("notas"));
-                    }
-
                     Optional<Espacio> espacioModificadoOptional = modificarEspacio
-                            .modificar(jsonObject.getString("id"),
-                                    capacidad, notas);
+                            .modificar(mapper.readValue(mensajeArray[1], DatosDTO.class));
                     if (espacioModificadoOptional.isPresent()) {
                         devolverMensajes(mapper.writeValueAsString(espacioParser.
                                 entidadADTO(espacioModificadoOptional.get())));
                     } else {
                         devolverMensajes("ERROR");
                     }
-                } catch (Exception e){
-                    devolverMensajes("ERROR");
-                }
+                break;
+
+            case "filtrarBusquedaEspacios:":
+                Collection<Espacio> espaciosFiltrados = filtrarBusquedaEspacios
+                        .filtrar(mapper.readValue(mensajeArray[1], BusquedaDTO.class));
+                devolverMensajes(mapper.writeValueAsString(espaciosFiltrados
+                        .stream()
+                        .map(espacioParser::entidadADTO)
+                        .collect(Collectors.toList())));
                 break;
 
             default:
