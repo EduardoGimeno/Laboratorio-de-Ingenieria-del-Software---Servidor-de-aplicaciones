@@ -48,6 +48,9 @@ public class Receptor{
     FiltrarBusquedaReservas filtrarBusquedaReservas;
 
     @Autowired
+    GerenteServicio gerenteServicio;
+
+    @Autowired
     ReservaParser reservaParser;
 
     @Autowired
@@ -230,6 +233,18 @@ public class Receptor{
                         .stream()
                         .map(reservaParser::entidadADTO)
                         .collect(Collectors.toList())));
+                break;
+
+            case "cambiarEspacioReservable:":
+                jsonObject = new JSONObject(mensajeArray[1]);
+                devolverMensajes(modificarEspacio.cambiarReservable(
+                        jsonObject.getString("id")).toString());
+                break;
+
+            case "logInGerente:":
+                GerenteDTO gerenteDTO = mapper.readValue(mensajeArray[1], GerenteDTO.class);
+                devolverMensajes(gerenteServicio.logIn(gerenteDTO.getNomUsuario(),
+                        gerenteDTO.getPassword()).toString());
                 break;
 
             default:

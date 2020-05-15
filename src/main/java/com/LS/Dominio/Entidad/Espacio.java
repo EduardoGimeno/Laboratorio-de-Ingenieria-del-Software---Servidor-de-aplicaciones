@@ -45,6 +45,9 @@ public class Espacio {
 
     private String notas;
 
+    @NotNull
+    private Boolean reservable;
+
     /*public Espacio(String id, String tipo, int capacidad, // List<Equipamiento> equipamiento,
                    Ubicacion ubicacion) {
         this.tipo = tipo;
@@ -76,6 +79,12 @@ public class Espacio {
 
     public String getNotas() {
         return this.notas;
+    }
+
+    public Boolean getReservable() { return this.reservable; }
+
+    public Boolean cambiarReservable() {
+        return this.reservable = !this.reservable;
     }
 
     public void modificar (int capacidad, String notas) {

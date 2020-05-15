@@ -38,4 +38,14 @@ public class ModificarEspacio {
             return Optional.empty();
         }
     }
+
+    public Boolean cambiarReservable(String id) {
+        Boolean cambiado = false;
+        Optional<Espacio> espacioOptional = espacioRepository.findById(id);
+        if (espacioOptional.isPresent()) {
+            cambiado = espacioOptional.get().cambiarReservable();
+            espacioRepository.save(espacioOptional.get());
+        }
+        return cambiado;
+    }
 }
