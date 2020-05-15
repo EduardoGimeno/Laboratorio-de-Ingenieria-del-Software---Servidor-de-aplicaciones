@@ -12,6 +12,7 @@
 
 package com.LS.Dominio.Servicio;
 
+import ObjetoValor.EstadoReserva;
 import com.LS.Dominio.Entidad.Reserva;
 import com.LS.Dominio.Repositorio.ReservaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,14 @@ public class ObtenerReservas {
         return reservaRepository.findByIdEspacio(idEspacio);
     }
 
+    public List<Reserva> obtenerReservasEstado(EstadoReserva estadoReserva) {
+        return reservaRepository.findByEstado(estadoReserva.getEstado());
+    }
+
+    public List<Reserva> obtenerReservasEspacioEstado(String idEspacio, EstadoReserva estadoReserva) {
+        return reservaRepository.findByIdEspacioAndEstado(idEspacio, estadoReserva.getEstado());
+    }
+
     //??
     public List<Reserva> obtenerPorEspacioYFecha(String idEspacio, Timestamp fecha) {
         Timestamp dia = new Timestamp(fecha.getYear(), fecha.getMonth(),
@@ -48,6 +57,12 @@ public class ObtenerReservas {
         Calendar cal = Calendar.getInstance();
         cal.setTime(dia);
         return reservaRepository.findByIdEspacioYDia(idEspacio, dia, cal.get(Calendar.DAY_OF_WEEK));
+    }
+
+    public List<Reserva> obtenerPorEspacioFechasYHoras(String idEspacio, Timestamp fechaIni,
+                                                  Timestamp fechaFin, Timestamp horaIni, Timestamp horaFin) {
+        return reservaRepository.findByEspacioFechasYHoras(idEspacio, EstadoReserva.PENDIENTE.getEstado(),
+                fechaIni, fechaFin, horaIni, horaFin);
     }
 
 }

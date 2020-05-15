@@ -45,6 +45,9 @@ public class Receptor{
     FiltrarBusquedaEspacios filtrarBusquedaEspacios;
 
     @Autowired
+    FiltrarBusquedaReservas filtrarBusquedaReservas;
+
+    @Autowired
     ReservaParser reservaParser;
 
     @Autowired
@@ -129,6 +132,28 @@ public class Receptor{
                         .collect(Collectors.toList())));
             break;
 
+            case "obtenerReservasEstado":
+                jsonObject = new JSONObject(mensajeArray[1]);
+                Collection<Reserva> reservasEstado = obtenerReservas
+                        .obtenerReservasEstado(EstadoReserva.valueOf(jsonObject.getString("estado")));
+                devolverMensajes(mapper.writeValueAsString(reservasEstado
+                        .stream()
+                        .map(reservaParser::entidadADTO)
+                        .collect(Collectors.toList())));
+            break;
+
+            case "obtenerReservasEspacioEstado":
+                jsonObject = new JSONObject(mensajeArray[1]);
+                Collection<Reserva> reservasEspacioEstado = obtenerReservas
+                        .obtenerReservasEspacioEstado(
+                                jsonObject.getString("idEspacio"),
+                                EstadoReserva.valueOf(jsonObject.getString("estado")));
+                devolverMensajes(mapper.writeValueAsString(reservasEspacioEstado
+                        .stream()
+                        .map(reservaParser::entidadADTO)
+                        .collect(Collectors.toList())));
+            break;
+
             //??
             case "obtenerReservasEspacioFecha":
                 jsonObject = new JSONObject(mensajeArray[1]);
@@ -189,6 +214,21 @@ public class Receptor{
                 devolverMensajes(mapper.writeValueAsString(espaciosFiltrados
                         .stream()
                         .map(espacioParser::entidadADTO)
+                        .collect(Collectors.toList())));
+                break;
+
+            case "filtrarBusquedaReservas:":
+                jsonObject = new JSONObject(mensajeArray[1]);
+                Collection<Reserva> reservasFiltradas = filtrarBusquedaReservas
+                        .filtrar(jsonObject.getString("edificio"),
+                                jsonObject.getString("tipo"),
+                                new Timestamp(jsonObject.getLong("fechaIni")),
+                                new Timestamp(jsonObject.getLong("fechaFin")),
+                                new Timestamp(jsonObject.getLong("horaIni")),
+                                new Timestamp(jsonObject.getLong("horaFin")));
+                devolverMensajes(mapper.writeValueAsString(reservasFiltradas
+                        .stream()
+                        .map(reservaParser::entidadADTO)
                         .collect(Collectors.toList())));
                 break;
 
