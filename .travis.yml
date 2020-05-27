@@ -1,0 +1,21 @@
+language: java
+jdk:
+  - oraclejdk11
+branches:
+  only:
+    - master
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+#addons:
+#  sonarcloud:
+#    organization: "sonarcloud_organization_key" # the key of the org you chose at step #3
+#    token:
+#      secure: "*********" # encrypted value of your token
+#script:
+#  # other script steps might be done before running the actual analysis
+#  - sonar-scanner
