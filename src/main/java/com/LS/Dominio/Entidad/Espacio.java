@@ -12,15 +12,17 @@
 
 package com.LS.Dominio.Entidad;
 
-import ObjetoValor.Equipamiento;
-import ObjetoValor.Ubicacion;
+
+
+import com.LS.Dominio.ObjetoValor.Equipamiento;
+import com.LS.Dominio.ObjetoValor.Ubicacion;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 public class Espacio {
@@ -37,7 +39,8 @@ public class Espacio {
 
     @NotNull
     @Embedded
-    private List<Equipamiento> equipamiento;
+    @ElementCollection(targetClass= Equipamiento.class, fetch=FetchType.EAGER)
+    private List<Equipamiento> equipamiento = new ArrayList<>();
 
     @NotNull
     @Embedded

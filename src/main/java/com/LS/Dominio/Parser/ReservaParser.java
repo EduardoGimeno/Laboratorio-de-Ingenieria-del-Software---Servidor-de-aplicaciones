@@ -15,6 +15,7 @@ package com.LS.Dominio.Parser;
 import DTO.HorarioDTO;
 import DTO.ReservaDTO;
 import com.LS.Dominio.Entidad.Reserva;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -23,11 +24,14 @@ import java.util.List;
 @Service
 public class ReservaParser {
 
+    @Autowired
+    ObjetosValorParser objetosValorParser;
+
     public ReservaDTO entidadADTO (Reserva reserva) {
         ReservaDTO dto = new ReservaDTO();
         dto.setId(reserva.getId());
         dto.setIdEspacio(reserva.getIdEspacio());
-        dto.setUsuario(reserva.getUsuario());
+        dto.setUsuario(objetosValorParser.usuarioOVADTO(reserva.getUsuario()));
         dto.setDias(reserva.getDias());
         dto.setEstado(reserva.getEstado());
         dto.setFechaInicio(reserva.getFechaInicio());
@@ -40,7 +44,7 @@ public class ReservaParser {
     public Reserva DTOAEntidad (ReservaDTO dto) {
         return new Reserva(dto.getHoraInicio(), dto.getHoraFin(),
                 dto.getFechaInicio(), dto.getFechaFin(), dto.getDiasString(),
-                dto.getEstado(), dto.getUsuario(), dto.getIdEspacio());
+                dto.getEstado(), objetosValorParser.usuarioDTOAOV(dto.getUsuario()), dto.getIdEspacio());
     }
 
     public HorarioDTO ListaReservasAHorarioDTO(String idEspacio, List<Reserva> reservas, Timestamp dia) {

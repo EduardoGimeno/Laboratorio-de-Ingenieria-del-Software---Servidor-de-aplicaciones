@@ -12,10 +12,9 @@
 
 package com.LS.Dominio.Entidad;
 
-import ObjetoValor.Dia;
-import ObjetoValor.Usuario;
-import ObjetoValor.EstadoReserva;
-import org.springframework.aop.support.DefaultIntroductionAdvisor;
+import Enum.Dia;
+import Enum.EstadoReserva;
+import com.LS.Dominio.ObjetoValor.Usuario;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

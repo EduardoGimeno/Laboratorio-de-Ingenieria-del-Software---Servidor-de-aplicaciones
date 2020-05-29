@@ -1,10 +1,9 @@
 package com.LS.Dominio.Mensajeria;
 
 import DTO.*;
-import ObjetoValor.EstadoReserva;
+import Enum.EstadoReserva;
 import com.LS.Dominio.Entidad.*;
-import com.LS.Dominio.Parser.EspacioParser;
-import com.LS.Dominio.Parser.ReservaParser;
+import com.LS.Dominio.Parser.*;
 import com.LS.Dominio.Servicio.*;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -19,7 +18,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -105,12 +103,14 @@ public class Receptor{
         String[] mensajeArray = mensaje.split(",", 2);
 
         switch (mensajeArray[0]) {
+            // USUARIO Y GERENTE
             case "crearReserva":
                 devolverMensajes(mapper.writeValueAsString(reservaParser
                         .entidadADTO(gestionReservas.crear(reservaParser
                         .DTOAEntidad(mapper.readValue(mensajeArray[1], ReservaDTO.class))))));
             break;
 
+            //GERENTE
             case "modificarEstadoReserva":
                 jsonObject = new JSONObject(mensajeArray[1]);
                 Optional<Reserva> reservaOptional = gestionReservas.cambiarEstado(
@@ -125,6 +125,7 @@ public class Receptor{
                 }
             break;
 
+            // GERENTE
             case "obtenerReservasEspacio":
                 jsonObject = new JSONObject(mensajeArray[1]);
                 Collection<Reserva> reservasEspacio = obtenerReservas
@@ -135,6 +136,7 @@ public class Receptor{
                         .collect(Collectors.toList())));
             break;
 
+            //GERENTE
             case "obtenerReservasEstado":
                 jsonObject = new JSONObject(mensajeArray[1]);
                 Collection<Reserva> reservasEstado = obtenerReservas
@@ -145,6 +147,7 @@ public class Receptor{
                         .collect(Collectors.toList())));
             break;
 
+            //??
             case "obtenerReservasEspacioEstado":
                 jsonObject = new JSONObject(mensajeArray[1]);
                 Collection<Reserva> reservasEspacioEstado = obtenerReservas
@@ -169,6 +172,7 @@ public class Receptor{
                         .collect(Collectors.toList())));
             break;
 
+            //USUARIO Y GERENTE
             case "obtenerHorarioEntreFechas":
                 jsonObject = new JSONObject(mensajeArray[1]);
                 devolverMensajes(mapper.writeValueAsString(obtenerHorarios
@@ -177,7 +181,8 @@ public class Receptor{
                                 new Timestamp(jsonObject.getLong("fechaFin")))));
                 break;
 
-            case "obtenerEspacioPorId:":
+            //USUARIO
+            case "obtenerEspacioPorId":
                 jsonObject = new JSONObject(mensajeArray[1]);
                 Optional<Espacio> espacioOptional = obtenerEspacios
                         .obtenerInformacion(jsonObject.getString("id"));
@@ -189,7 +194,8 @@ public class Receptor{
                 }
                 break;
 
-            case "obtenerEspacioPorEdificioYTipo:":
+            //GERENTE -> PARA MODIFICAR LOS DATOS
+            case "obtenerEspacioPorEdificioYTipo":
                 jsonObject = new JSONObject(mensajeArray[1]);
                 Collection<Espacio> espaciosPorEdificioYTipo = obtenerEspacios
                         .obtenerPorEdificioYTipo(jsonObject.getString("edificio"),
@@ -200,7 +206,8 @@ public class Receptor{
                         .collect(Collectors.toList())));
                 break;
 
-            case "modificarEspacio:":
+            //GERENTE
+            case "modificarEspacio":
                     Optional<Espacio> espacioModificadoOptional = modificarEspacio
                             .modificar(mapper.readValue(mensajeArray[1], DatosDTO.class));
                     if (espacioModificadoOptional.isPresent()) {
@@ -211,7 +218,8 @@ public class Receptor{
                     }
                 break;
 
-            case "filtrarBusquedaEspacios:":
+            //USUARIO
+            case "filtrarBusquedaEspacios":
                 Collection<Espacio> espaciosFiltrados = filtrarBusquedaEspacios
                         .filtrar(mapper.readValue(mensajeArray[1], BusquedaDTO.class));
                 devolverMensajes(mapper.writeValueAsString(espaciosFiltrados
@@ -220,7 +228,8 @@ public class Receptor{
                         .collect(Collectors.toList())));
                 break;
 
-            case "filtrarBusquedaReservas:":
+            //??
+            case "filtrarBusquedaReservas":
                 jsonObject = new JSONObject(mensajeArray[1]);
                 Collection<Reserva> reservasFiltradas = filtrarBusquedaReservas
                         .filtrar(jsonObject.getString("edificio"),
@@ -235,13 +244,15 @@ public class Receptor{
                         .collect(Collectors.toList())));
                 break;
 
-            case "cambiarEspacioReservable:":
+            //?? -> MODIFICAR DATOS
+            case "cambiarEspacioReservable":
                 jsonObject = new JSONObject(mensajeArray[1]);
                 devolverMensajes(modificarEspacio.cambiarReservable(
                         jsonObject.getString("id")).toString());
                 break;
 
-            case "logInGerente:":
+            //GERENTE
+            case "logInGerente":
                 GerenteDTO gerenteDTO = mapper.readValue(mensajeArray[1], GerenteDTO.class);
                 devolverMensajes(gerenteServicio.logIn(gerenteDTO.getNomUsuario(),
                         gerenteDTO.getPassword()).toString());

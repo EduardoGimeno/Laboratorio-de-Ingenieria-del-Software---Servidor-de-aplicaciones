@@ -11,7 +11,7 @@
 
 package com.LS.Dominio.Servicio;
 
-import ObjetoValor.EstadoReserva;
+import Enum.EstadoReserva;
 import com.LS.Dominio.Entidad.Reserva;
 import com.LS.Dominio.Repositorio.ReservaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
