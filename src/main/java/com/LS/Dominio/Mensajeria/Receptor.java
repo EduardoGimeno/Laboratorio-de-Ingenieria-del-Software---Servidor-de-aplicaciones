@@ -244,13 +244,6 @@ public class Receptor{
                         .collect(Collectors.toList())));
                 break;
 
-            //?? -> MODIFICAR DATOS
-            case "cambiarEspacioReservable":
-                jsonObject = new JSONObject(mensajeArray[1]);
-                devolverMensajes(modificarEspacio.cambiarReservable(
-                        jsonObject.getString("id")).toString());
-                break;
-
             //GERENTE
             case "logInGerente":
                 GerenteDTO gerenteDTO = mapper.readValue(mensajeArray[1], GerenteDTO.class);

@@ -86,12 +86,10 @@ public class Espacio {
 
     public Boolean getReservable() { return this.reservable; }
 
-    public Boolean cambiarReservable() {
-        return this.reservable = !this.reservable;
-    }
-
-    public void modificar (int capacidad, String notas) {
+    public void modificar (List<Equipamiento> equipamiento, int capacidad, Boolean reservable, String notas) {
+        this.equipamiento = equipamiento;
         this.capacidad = capacidad;
+        this.reservable = reservable;
         this.notas = notas;
     }
 }

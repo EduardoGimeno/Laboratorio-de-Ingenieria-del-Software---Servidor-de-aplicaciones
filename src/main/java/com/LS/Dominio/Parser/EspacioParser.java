@@ -34,6 +34,7 @@ public class EspacioParser {
                 .map(objetosValorParser::equipamientoOVADTO)
                 .collect(Collectors.toList()));
         dto.setNotas(espacio.getNotas());
+        dto.setReservable(espacio.getReservable());
         return dto;
     }
 

@@ -38,6 +38,10 @@ public class ObjetosValorParser {
         return dto;
     }
 
+    public Equipamiento equipamientoDTOAOV (EquipamientoDTO dto) {
+        return new Equipamiento(dto.getTipo(), dto.getCantidad(), dto.getMaxCantidad());
+    }
+
     public UsuarioDTO usuarioOVADTO (Usuario usuario) {
         UsuarioDTO dto = new UsuarioDTO();
         dto.setNombre(usuario.getNombre());
