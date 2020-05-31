@@ -12,6 +12,7 @@
 
 package com.LS.Dominio.Servicio;
 
+import Enum.Dia;
 import DTO.HorarioDTO;
 import com.LS.Dominio.Parser.ReservaParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ import java.util.List;
 public class ObtenerHorarios {
 
     @Autowired
-    ReservaParser reservaParser;
+    private ReservaParser reservaParser;
 
     @Autowired
     private ObtenerReservas obtenerReservas;
@@ -41,6 +42,25 @@ public class ObtenerHorarios {
         for (int i = 0; i <= dias; i++) {
             horarios.add(obtenerPorEspacioYDia(idEspacio, new Timestamp(cal.getTime().getTime())));
             cal.add(Calendar.DATE, 1);
+        }
+        return horarios;
+    }
+
+    public List<HorarioDTO> obtenerPorEspaciosEntreFechasYDiasConcretos (String idEspacio, Timestamp fechaInicio,
+                                                                         Timestamp fechaFin, List<Dia> dias) {
+        List<HorarioDTO> horarios = new ArrayList<>();
+        int numeroDias = fechaFin.getDate() - fechaInicio.getDate();
+        Timestamp dia = new Timestamp(fechaInicio.getYear(), fechaInicio.getMonth(),
+                fechaInicio.getDate(), 0, 0, 0, 0);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dia);
+        for (int i = 0; i <= numeroDias; i++) {
+            for (Dia diaSemana: dias) {
+                if (diaSemana.getDia() == cal.get(Calendar.DAY_OF_WEEK)) {
+                    horarios.add(obtenerPorEspacioYDia(idEspacio, new Timestamp(cal.getTime().getTime())));
+                    cal.add(Calendar.DATE, 1);
+                }
+            }
         }
         return horarios;
     }

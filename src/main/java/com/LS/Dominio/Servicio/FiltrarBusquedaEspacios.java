@@ -1,6 +1,7 @@
 package com.LS.Dominio.Servicio;
 
 import DTO.BusquedaDTO;
+import DTO.HorarioDTO;
 import com.LS.Dominio.Entidad.Espacio;
 import com.LS.Dominio.ObjetoValor.Equipamiento;
 import com.LS.Dominio.Parser.ObjetosValorParser;
@@ -8,7 +9,9 @@ import com.LS.Dominio.Repositorio.EspacioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +23,10 @@ public class FiltrarBusquedaEspacios {
     private EspacioRepository espacioRepository;
 
     @Autowired
-    ObjetosValorParser objetosValorParser;
+    private ObjetosValorParser objetosValorParser;
+
+    @Autowired
+    private ObtenerHorarios obtenerHorarios;
 
     public Collection<Espacio> filtrar (BusquedaDTO busquedaDTO) {
         List<Espacio> espacios = new ArrayList<>();
@@ -64,10 +70,17 @@ public class FiltrarBusquedaEspacios {
                             .map(objetosValorParser::equipamientoDTOAOV)
                             .collect(Collectors.toList()));
         }
+
+        /*
+            AHORA FILTRAR ESPACIOS QUE COINCIDAN CON LAS FECHAS Y LAS HORAS
+         */
+
+        espacios = filtrarPorHorario(espacios, busquedaDTO);
+
         return espacios;
     }
 
-    public List<Espacio> filtrarPorEquipamiento(List<Espacio> espacios, List<Equipamiento> equipamientos) {
+    private List<Espacio> filtrarPorEquipamiento(List<Espacio> espacios, List<Equipamiento> equipamientos) {
         List<Espacio> espaciosFiltrados = new ArrayList<>();
         for (Espacio espacio: espacios) {
             boolean correcto = true;
@@ -86,6 +99,42 @@ public class FiltrarBusquedaEspacios {
             }
             if (correcto) {
                 espaciosFiltrados.add(espacio);
+            }
+        }
+        return espaciosFiltrados;
+    }
+
+    private List<Espacio> filtrarPorHorario(List<Espacio> espacios, BusquedaDTO busqueda) {
+        List<Espacio> espaciosFiltrados = new ArrayList<>();
+        if (!busqueda.isPeriodo()) {
+            for (Espacio espacio: espacios) {
+                HorarioDTO horario = obtenerHorarios.obtenerPorEspacioYDia(espacio.getId(),
+                        busqueda.getFechaInicio());
+                boolean ocupado = false;
+                for (int i = busqueda.getHoraInicio(); i < busqueda.getHoraFin(); i++) {
+                    if (horario.getHorasOcupadas().contains(i)) {
+                        ocupado = true;
+                    }
+                }
+                if (!ocupado) {
+                    espaciosFiltrados.add(espacio);
+                }
+            }
+        } else {
+            for (Espacio espacio: espacios) {
+                List<HorarioDTO> horarios = obtenerHorarios.obtenerPorEspaciosEntreFechasYDiasConcretos(espacio.getId(),
+                        busqueda.getFechaInicio(), busqueda.getFechaFin(), busqueda.getDias());
+                boolean ocupado = false;
+                for (HorarioDTO horario: horarios) {
+                    for (int i = busqueda.getHoraInicio(); i < busqueda.getHoraFin(); i++) {
+                        if (horario.getHorasOcupadas().contains(i)) {
+                            ocupado = true;
+                        }
+                    }
+                }
+                if (!ocupado) {
+                    espaciosFiltrados.add(espacio);
+                }
             }
         }
         return espaciosFiltrados;
