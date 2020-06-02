@@ -107,6 +107,7 @@ public class FiltrarBusquedaEspacios {
     private List<Espacio> filtrarPorHorario(List<Espacio> espacios, BusquedaDTO busqueda) {
         List<Espacio> espaciosFiltrados = new ArrayList<>();
         if (!busqueda.isPeriodo()) {
+            System.out.println("NO ES PERIODO");
             for (Espacio espacio: espacios) {
                 HorarioDTO horario = obtenerHorarios.obtenerPorEspacioYDia(espacio.getId(),
                         busqueda.getFechaInicio());
@@ -121,12 +122,19 @@ public class FiltrarBusquedaEspacios {
                 }
             }
         } else {
+            System.out.println("ES PERIODO");
             for (Espacio espacio: espacios) {
+                System.out.println(espacio.getId());
                 List<HorarioDTO> horarios = obtenerHorarios.obtenerPorEspaciosEntreFechasYDiasConcretos(espacio.getId(),
                         busqueda.getFechaInicio(), busqueda.getFechaFin(), busqueda.getDias());
                 boolean ocupado = false;
                 for (HorarioDTO horario: horarios) {
+                    System.out.println(horario.getDia());
+                    for (Integer i: horario.getHorasOcupadas()) {
+                        System.out.println("HORA OCUPADA: " + i);
+                    }
                     for (int i = busqueda.getHoraInicio(); i < busqueda.getHoraFin(); i++) {
+                        System.out.println("HORA BUSCADA: " + i);
                         if (horario.getHorasOcupadas().contains(i)) {
                             ocupado = true;
                         }

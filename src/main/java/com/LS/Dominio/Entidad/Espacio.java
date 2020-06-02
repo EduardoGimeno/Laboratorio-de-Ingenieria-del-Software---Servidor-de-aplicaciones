@@ -16,6 +16,11 @@ package com.LS.Dominio.Entidad;
 
 import com.LS.Dominio.ObjetoValor.Equipamiento;
 import com.LS.Dominio.ObjetoValor.Ubicacion;
+import com.bedatadriven.jackson.datatype.jts.serialization.GeometryDeserializer;
+import com.bedatadriven.jackson.datatype.jts.serialization.GeometrySerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.vividsolutions.jts.geom.Geometry;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -29,6 +34,9 @@ public class Espacio {
 
     @Id
     private String id;
+
+    @NotNull
+    private String nombre;
 
     @NotNull
     private String tipo;
@@ -51,6 +59,13 @@ public class Espacio {
     @NotNull
     private Boolean reservable;
 
+    @NotNull
+    @JsonSerialize(using = GeometrySerializer.class)
+    @JsonDeserialize(using = GeometryDeserializer.class)
+    @Column(name = "geom", columnDefinition = "GEOMETRY")
+    private Geometry geom;
+
+
     /*public Espacio(String id, String tipo, int capacidad, // List<Equipamiento> equipamiento,
                    Ubicacion ubicacion) {
         this.tipo = tipo;
@@ -63,6 +78,8 @@ public class Espacio {
     public String getId() {
         return this.id;
     }
+
+    public String getNombre() { return nombre; }
 
     public String getTipo() {
         return this.tipo;
@@ -85,6 +102,8 @@ public class Espacio {
     }
 
     public Boolean getReservable() { return this.reservable; }
+
+    public Geometry getGeom() { return geom; }
 
     public void modificar (List<Equipamiento> equipamiento, int capacidad, Boolean reservable, String notas) {
         this.equipamiento = equipamiento;

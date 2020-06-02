@@ -31,10 +31,10 @@ public class Reserva {
     private String id;
 
     @NotNull
-    private Timestamp horaInicio;
+    private int horaInicio;
 
     @NotNull
-    private Timestamp horaFin;
+    private int horaFin;
 
     @NotNull
     private Timestamp fechaInicio;
@@ -56,7 +56,8 @@ public class Reserva {
     @NotNull
     private String idEspacio;
 
-    public Reserva(Timestamp horaInicio, Timestamp horaFin, Timestamp fechaInicio, Timestamp fechaFin,
+
+    public Reserva(int horaInicio, int horaFin, Timestamp fechaInicio, Timestamp fechaFin,
                    List<Integer> dias, EstadoReserva estado, Usuario usuario, String idEspacio) {
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
@@ -75,11 +76,11 @@ public class Reserva {
         return this.id;
     }
 
-    public Timestamp getHoraInicio() {
+    public int getHoraInicio() {
         return this.horaInicio;
     }
 
-    public Timestamp getHoraFin() {
+    public int getHoraFin() {
         return this.horaFin;
     }
 

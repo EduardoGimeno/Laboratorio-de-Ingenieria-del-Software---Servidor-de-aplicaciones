@@ -236,8 +236,8 @@ public class Receptor{
                                 jsonObject.getString("tipo"),
                                 new Timestamp(jsonObject.getLong("fechaIni")),
                                 new Timestamp(jsonObject.getLong("fechaFin")),
-                                new Timestamp(jsonObject.getLong("horaIni")),
-                                new Timestamp(jsonObject.getLong("horaFin")));
+                                jsonObject.getInt("horaIni"),
+                                jsonObject.getInt("horaFin"));
                 devolverMensajes(mapper.writeValueAsString(reservasFiltradas
                         .stream()
                         .map(reservaParser::entidadADTO)

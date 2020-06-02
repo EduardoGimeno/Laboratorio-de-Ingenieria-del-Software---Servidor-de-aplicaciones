@@ -22,7 +22,7 @@ public class FiltrarBusquedaReservas {
     private ObtenerReservas obtenerReservas;
 
     public Collection<Reserva> filtrar (String edificio, String tipo, Timestamp fechaIni,
-                                        Timestamp fechaFin, Timestamp horaIni, Timestamp horaFin) {
+                                        Timestamp fechaFin, int horaIni, int horaFin) {
         List<Reserva> reservasFitradas = new ArrayList<>();
         List<Espacio> espaciosFiltrados = espacioRepository.findByUbicacionEdificioAndTipo(edificio, tipo);
         for (Espacio espacio: espaciosFiltrados) {
