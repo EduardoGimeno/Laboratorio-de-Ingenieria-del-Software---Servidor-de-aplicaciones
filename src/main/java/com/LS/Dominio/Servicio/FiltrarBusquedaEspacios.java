@@ -1,6 +1,7 @@
 package com.LS.Dominio.Servicio;
 
 import DTO.BusquedaDTO;
+import DTO.EquipamientoDTO;
 import DTO.HorarioDTO;
 import com.LS.Dominio.Entidad.Espacio;
 import com.LS.Dominio.ObjetoValor.Equipamiento;
@@ -9,9 +10,7 @@ import com.LS.Dominio.Repositorio.EspacioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +28,7 @@ public class FiltrarBusquedaEspacios {
     private ObtenerHorarios obtenerHorarios;
 
     public Collection<Espacio> filtrar (BusquedaDTO busquedaDTO) {
+        busquedaDTO = limpiarDatosIncorrectos(busquedaDTO);
         List<Espacio> espacios = new ArrayList<>();
         if (busquedaDTO.getEdificio().equals("null")) {
             if (busquedaDTO.getTipoEspacio().equals("null")) {
@@ -138,6 +138,20 @@ public class FiltrarBusquedaEspacios {
             }
         }
         return espaciosFiltrados;
+    }
+
+    private BusquedaDTO limpiarDatosIncorrectos(BusquedaDTO busqueda) {
+        if (!busqueda.isPeriodo()) {
+            busqueda.setDias(new ArrayList<>());
+        }
+        List<EquipamientoDTO> equipamientos = new ArrayList<>();
+        for (EquipamientoDTO equipamiento :busqueda.getEquipamiento()) {
+            if (equipamiento.getCantidad() > 0) {
+                equipamientos.add(equipamiento);
+            }
+        }
+        busqueda.setEquipamiento(equipamientos);
+        return busqueda;
     }
 
 }

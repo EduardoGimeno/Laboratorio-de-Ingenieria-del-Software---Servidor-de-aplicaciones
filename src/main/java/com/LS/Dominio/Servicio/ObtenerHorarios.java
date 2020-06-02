@@ -58,9 +58,9 @@ public class ObtenerHorarios {
             for (Dia diaSemana: dias) {
                 if (diaSemana.getDia() == cal.get(Calendar.DAY_OF_WEEK)) {
                     horarios.add(obtenerPorEspacioYDia(idEspacio, new Timestamp(cal.getTime().getTime())));
-                    cal.add(Calendar.DATE, 1);
                 }
             }
+            cal.add(Calendar.DATE, 1);
         }
         return horarios;
     }
