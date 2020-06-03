@@ -27,6 +27,7 @@ public class EspacioParser {
     public EspacioDTO entidadADTO (Espacio espacio) {
         EspacioDTO dto = new EspacioDTO();
         dto.setId(espacio.getId());
+        dto.setNombre(espacio.getNombre());
         dto.setTipo(espacio.getTipo());
         dto.setCapacidad(espacio.getCapacidad());
         dto.setUbicacion(objetosValorParser.ubicacionOVADTO(espacio.getUbicacion()));
@@ -35,6 +36,7 @@ public class EspacioParser {
                 .collect(Collectors.toList()));
         dto.setNotas(espacio.getNotas());
         dto.setReservable(espacio.getReservable());
+        dto.setGeom(espacio.getGeom());
         return dto;
     }
 

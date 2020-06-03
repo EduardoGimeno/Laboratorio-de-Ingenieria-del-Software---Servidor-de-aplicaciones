@@ -64,7 +64,7 @@ public class ReservaParser {
         horario.setIdEspacio(idEspacio);
         horario.setDia(dia);
         horario.setHoraInicio(8);
-        horario.setHoraFin(21);
+        horario.setHoraFin(22);
         if (reservas != null) {
             for (Reserva reserva : reservas) {
                 Integer horas = reserva.getHoraFin() - reserva.getHoraInicio();

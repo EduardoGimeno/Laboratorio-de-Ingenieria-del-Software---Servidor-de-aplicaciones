@@ -47,6 +47,7 @@ public class DominioApplication {
 		receptor.esperarMensajes();
 	}
 
+
 	/*@Bean
 	public void modificarEspacioBean() {
 		DatosDTO datos = new DatosDTO();

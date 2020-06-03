@@ -19,13 +19,14 @@ dependencies {
 	implementation 'javax.validation:validation-api:2.0.1.Final'
 	implementation 'com.rabbitmq:amqp-client:5.8.0'
 	//implementation 'com.github.UNIZAR-30249-2020-GRUPO02:DTO:-SNAPSHOT'
-	implementation 'com.github.UNIZAR-30249-2020-GRUPO02:DTO:39ef3c056d'
+	implementation 'com.github.UNIZAR-30249-2020-GRUPO02:DTO:b83e78fb55'
 	implementation 'com.bedatadriven:jackson-datatype-jts:2.4'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.3'
 	implementation 'com.vividsolutions:jts:1.13'
 	compile 'org.json:json:20171018'
 	implementation 'org.postgresql:postgresql'
-	//runtimeOnly 'mysql:mysql-connector-java'
+	implementation 'org.hibernate:hibernate-spatial:5.1.0.Final'
+	implementation 'net.postgis:postgis-jdbc:2.5.0'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
