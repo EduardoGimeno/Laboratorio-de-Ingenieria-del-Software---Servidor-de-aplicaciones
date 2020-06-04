@@ -34,12 +34,15 @@ public class ObtenerHorarios {
 
     public List<HorarioDTO> obtenerPorEspacioEntreFechas (String idEspacio, Timestamp fechaInicio, Timestamp fechaFin) {
         List<HorarioDTO> horarios = new ArrayList<>();
-        int dias = fechaFin.getDate() - fechaInicio.getDate();
         Timestamp dia = new Timestamp(fechaInicio.getYear(), fechaInicio.getMonth(),
                 fechaInicio.getDate(), 0, 0, 0, 0);
+        Timestamp diaFin = new Timestamp(fechaFin.getYear(), fechaFin.getMonth(),
+                fechaFin.getDate(), 0, 0, 0, 0);
         Calendar cal = Calendar.getInstance();
         cal.setTime(dia);
-        for (int i = 0; i <= dias; i++) {
+        Calendar calFin = Calendar.getInstance();
+        calFin.setTime(diaFin);
+        while (cal.getTimeInMillis() <= calFin.getTimeInMillis()) {
             horarios.add(obtenerPorEspacioYDia(idEspacio, new Timestamp(cal.getTime().getTime())));
             cal.add(Calendar.DATE, 1);
         }
