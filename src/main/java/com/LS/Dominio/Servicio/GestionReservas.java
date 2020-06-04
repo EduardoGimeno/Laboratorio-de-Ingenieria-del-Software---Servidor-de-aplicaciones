@@ -28,8 +28,13 @@ public class GestionReservas {
     @Autowired
     private ReservaRepository reservaRepository;
 
+    @Autowired
+    private EnviarEmail enviarEmail;
+
     public Reserva crear(Reserva reserva) {
-        return reservaRepository.save(reserva);
+        Reserva reservaGuardada = reservaRepository.save(reserva);
+        enviarEmail.enviarReservaCreada(reservaGuardada);
+        return reservaGuardada;
     }
 
     public Optional<Reserva> cambiarEstado(String id, EstadoReserva estado, String motivo) {

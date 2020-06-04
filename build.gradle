@@ -27,6 +27,7 @@ dependencies {
 	implementation 'org.postgresql:postgresql'
 	implementation 'org.hibernate:hibernate-spatial:5.1.0.Final'
 	implementation 'net.postgis:postgis-jdbc:2.5.0'
+	implementation 'org.springframework.boot:spring-boot-starter-mail:2.2.5.RELEASE'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
