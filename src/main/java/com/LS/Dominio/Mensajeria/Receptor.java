@@ -65,6 +65,7 @@ public class Receptor{
         ConnectionFactory factoria = new ConnectionFactory();
         String amqpURL = System.getenv(ENV_AMQPURL_NAME) != null ?
                 System.getenv().get(ENV_AMQPURL_NAME) : "amqp://localhost";
+                //System.getenv().get(ENV_AMQPURL_NAME) : "amqp://btguhxgi:IuGPcOaHN1LXeeXx4S0TfFMuFK50Y9hg@squid.rmq.cloudamqp.com/btguhxgi[19:31]CLOUDAMQP_URL";
         try {
             factoria.setUri(amqpURL);
         }  catch (Exception e) {

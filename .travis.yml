@@ -11,11 +11,13 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
-#addons:
-#  sonarcloud:
-#    organization: "sonarcloud_organization_key" # the key of the org you chose at step #3
-#    token:
-#      secure: "*********" # encrypted value of your token
-#script:
-#  # other script steps might be done before running the actual analysis
-#  - sonar-scanner
+addons:
+  sonarcloud:
+    organization: "UNIZAR-30249-2020-GRUPO02" # the key of the org you chose at step #3
+    token:
+      secure: "$SONAR_TOKEN" # encrypted value of your token
+script:
+  # other script steps might be done before running the actual analysis
+  - ./gradlew clean build
+  - ./gradlew test jacocoTestReport
+  - sonar-scanner
