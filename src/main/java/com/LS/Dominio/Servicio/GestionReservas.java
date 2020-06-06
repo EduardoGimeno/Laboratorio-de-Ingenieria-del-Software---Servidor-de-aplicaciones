@@ -42,7 +42,7 @@ public class GestionReservas {
         reservaOptional.ifPresent(reserva -> {
             reserva.setEstado(estado);
             reservaRepository.save(reserva);
-            //ENVIAR EMAIL CON EL MOTIVO AL USUARIO DE LA RESERVA
+            enviarEmail.cambioEstadoReserva(reserva, estado, motivo);
         });
         return reservaOptional;
     }

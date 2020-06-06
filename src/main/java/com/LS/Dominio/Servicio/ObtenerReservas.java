@@ -56,7 +56,8 @@ public class ObtenerReservas {
                 fecha.getDate(), 0, 0, 0, 0);
         Calendar cal = Calendar.getInstance();
         cal.setTime(dia);
-        return reservaRepository.findByIdEspacioYDia(idEspacio, dia, cal.get(Calendar.DAY_OF_WEEK));
+        return reservaRepository.findByIdEspacioYDia(idEspacio, dia, cal.get(Calendar.DAY_OF_WEEK),
+                EstadoReserva.ACEPTADA.getEstado());
     }
 
     public List<Reserva> obtenerPorEspacioFechasYHoras(String idEspacio, Timestamp fechaIni,
