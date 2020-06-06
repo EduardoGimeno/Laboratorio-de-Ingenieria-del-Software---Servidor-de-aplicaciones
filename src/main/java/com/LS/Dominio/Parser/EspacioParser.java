@@ -24,6 +24,10 @@ public class EspacioParser {
     @Autowired
     ObjetosValorParser objetosValorParser;
 
+    public EspacioParser(ObjetosValorParser objetosValorParser) {
+        this.objetosValorParser = objetosValorParser;
+    }
+
     public EspacioDTO entidadADTO (Espacio espacio) {
         EspacioDTO dto = new EspacioDTO();
         dto.setId(espacio.getId());

@@ -39,7 +39,7 @@ public class Usuario {
     @Max(999999999)
     private int telefono;
 
-    public Usuario() { }
+    public Usuario() {}
 
     public Usuario(String nombre, String apellidos, String email, int NIA, int telefono) {
         this.nombre = nombre;

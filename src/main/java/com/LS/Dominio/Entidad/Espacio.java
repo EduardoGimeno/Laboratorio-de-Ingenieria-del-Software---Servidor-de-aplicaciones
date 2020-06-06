@@ -66,14 +66,17 @@ public class Espacio {
     private Geometry geom;
 
 
-    /*public Espacio(String id, String tipo, int capacidad, // List<Equipamiento> equipamiento,
-                   Ubicacion ubicacion) {
+    public Espacio(String id, String nombre, String tipo, int capacidad, List<Equipamiento> equipamiento,
+                   Ubicacion ubicacion, String notas, Boolean reservable) {
+        this.id = id;
+        this.nombre = nombre;
         this.tipo = tipo;
         this.capacidad = capacidad;
-        // this.equipamiento = equipamiento;
+        this.equipamiento = equipamiento;
         this.ubicacion = ubicacion;
-        this.id = id;
-    }*/
+        this.notas = notas;
+        this.reservable = reservable;
+    }
 
     public String getId() {
         return this.id;

@@ -14,7 +14,13 @@ public class TestObjetoValor {
         final int cantidad = 1;
         final int maxCantidad = 2;
 
-        Equipamiento equipamiento = new Equipamiento(tipoEquipamiento, cantidad, maxCantidad);
+        Equipamiento equipamiento = new Equipamiento();
+
+        assertNull(equipamiento.getTipo());
+        assertEquals(0, equipamiento.getCantidad());
+        assertEquals(0, equipamiento.getMaxCantidad());
+
+        equipamiento = new Equipamiento(tipoEquipamiento, cantidad, maxCantidad);
 
         assertEquals(tipoEquipamiento, equipamiento.getTipo());
         assertEquals(cantidad, equipamiento.getCantidad());
@@ -40,7 +46,12 @@ public class TestObjetoValor {
         final String edificio = "Ada Byron";
         final int planta = 0;
 
-        Ubicacion ubicacion = new Ubicacion(edificio, planta);
+        Ubicacion ubicacion = new Ubicacion();
+
+        assertNull(ubicacion.getEdificio());
+        assertEquals(0, ubicacion.getPlanta());
+
+        ubicacion = new Ubicacion(edificio, planta);
 
         assertEquals(edificio, ubicacion.getEdificio());
         assertEquals(planta, ubicacion.getPlanta());
@@ -56,7 +67,15 @@ public class TestObjetoValor {
         final int NIA = 123456;
         final int telefono = 123456789;
 
-        Usuario usuario = new Usuario(nombre, apellidos, email, NIA, telefono);
+        Usuario usuario = new Usuario();
+
+        assertNull(usuario.getNombre());
+        assertNull(usuario.getApellidos());
+        assertNull(usuario.getEmail());
+        assertEquals(0, usuario.getNIA());
+        assertEquals(0, usuario.getTelefono());
+
+        usuario = new Usuario(nombre, apellidos, email, NIA, telefono);
 
         assertEquals(nombre, usuario.getNombre());
         assertEquals(apellidos, usuario.getApellidos());

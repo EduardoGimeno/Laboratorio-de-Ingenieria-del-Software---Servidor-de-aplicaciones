@@ -23,14 +23,14 @@ import org.springframework.stereotype.Service;
 public class ObjetosValorParser {
 
 
-    public UbicacionDTO ubicacionOVADTO (Ubicacion ubicacion) {
+    public UbicacionDTO ubicacionOVADTO(Ubicacion ubicacion) {
         UbicacionDTO dto = new UbicacionDTO();
         dto.setEdificio(ubicacion.getEdificio());
         dto.setPlanta(ubicacion.getPlanta());
         return dto;
     }
 
-    public EquipamientoDTO equipamientoOVADTO (Equipamiento equipamiento) {
+    public EquipamientoDTO equipamientoOVADTO(Equipamiento equipamiento) {
         EquipamientoDTO dto = new EquipamientoDTO();
         dto.setTipo(equipamiento.getTipo());
         dto.setCantidad(equipamiento.getCantidad());
@@ -38,11 +38,11 @@ public class ObjetosValorParser {
         return dto;
     }
 
-    public Equipamiento equipamientoDTOAOV (EquipamientoDTO dto) {
+    public Equipamiento equipamientoDTOAOV(EquipamientoDTO dto) {
         return new Equipamiento(dto.getTipo(), dto.getCantidad(), dto.getMaxCantidad());
     }
 
-    public UsuarioDTO usuarioOVADTO (Usuario usuario) {
+    public UsuarioDTO usuarioOVADTO(Usuario usuario) {
         UsuarioDTO dto = new UsuarioDTO();
         dto.setNombre(usuario.getNombre());
         dto.setApellidos(usuario.getApellidos());
@@ -52,7 +52,7 @@ public class ObjetosValorParser {
         return dto;
     }
 
-    public Usuario usuarioDTOAOV (UsuarioDTO dto) {
+    public Usuario usuarioDTOAOV(UsuarioDTO dto) {
         return new Usuario(dto.getNombre(), dto.getApellidos(), dto.getEmail(),
                 dto.getNIA(), dto.getTelefono());
     }

@@ -107,8 +107,31 @@ public class Reserva {
             return Dia.MIERCOLES;
         } else if (dia.equals(Dia.JUEVES.getDia())) {
             return Dia.JUEVES;
+        } else if (dia.equals(Dia.VIERNES.getDia())) {
+            return Dia.VIERNES;
+        } else if (dia.equals(Dia.SABADO.getDia())) {
+            return Dia.SABADO;
+        } else {
+            return Dia.DOMINGO;
         }
-        return Dia.VIERNES;
+    }
+
+    public static Dia getDiaGlobal(Integer dia) {
+        if (dia.equals(Dia.LUNES.getDia())) {
+            return Dia.LUNES;
+        } else if (dia.equals(Dia.MARTES.getDia())) {
+            return Dia.MARTES;
+        } else if (dia.equals(Dia.MIERCOLES.getDia())) {
+            return Dia.MIERCOLES;
+        } else if (dia.equals(Dia.JUEVES.getDia())) {
+            return Dia.JUEVES;
+        } else if (dia.equals(Dia.VIERNES.getDia())) {
+            return Dia.VIERNES;
+        } else if (dia.equals(Dia.SABADO.getDia())) {
+            return Dia.SABADO;
+        } else {
+            return Dia.DOMINGO;
+        }
     }
 
     public void setEstado(EstadoReserva estado) {

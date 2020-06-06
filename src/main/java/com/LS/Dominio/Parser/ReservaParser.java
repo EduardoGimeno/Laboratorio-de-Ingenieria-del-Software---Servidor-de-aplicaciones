@@ -30,6 +30,9 @@ public class ReservaParser {
     @Autowired
     ObjetosValorParser objetosValorParser;
 
+    public ReservaParser(ObjetosValorParser objetosValorParser) {
+        this.objetosValorParser = objetosValorParser;
+    }
 
     public ReservaDTO entidadADTO (Reserva reserva) {
         ReservaDTO dto = new ReservaDTO();

@@ -20,7 +20,7 @@ public class Ubicacion {
 
     private int planta;
 
-    public Ubicacion() { }
+    public Ubicacion() {}
 
     public Ubicacion(String edificio, int planta) {
         this.edificio = edificio;
