@@ -78,6 +78,8 @@ public class Espacio {
         this.reservable = reservable;
     }
 
+    public Espacio() {}
+
     public String getId() {
         return this.id;
     }
