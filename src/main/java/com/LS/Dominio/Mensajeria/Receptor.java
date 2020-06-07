@@ -229,7 +229,7 @@ public class Receptor{
                         .collect(Collectors.toList())));
                 break;
 
-            //??
+            // GERENTE
             case "filtrarBusquedaReservas":
                 jsonObject = new JSONObject(mensajeArray[1]);
                 Collection<Reserva> reservasFiltradas = filtrarBusquedaReservas
@@ -238,7 +238,8 @@ public class Receptor{
                                 new Timestamp(jsonObject.getLong("fechaIni")),
                                 new Timestamp(jsonObject.getLong("fechaFin")),
                                 jsonObject.getInt("horaIni"),
-                                jsonObject.getInt("horaFin"));
+                                jsonObject.getInt("horaFin"),
+                                EstadoReserva.valueOf(jsonObject.getString("estado")));
                 devolverMensajes(mapper.writeValueAsString(reservasFiltradas
                         .stream()
                         .map(reservaParser::entidadADTO)

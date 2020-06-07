@@ -64,9 +64,10 @@ public class EnviarEmail {
                 reserva.getFechaFin().getYear() == reserva.getFechaInicio().getYear()) {
             int mes = reserva.getFechaInicio().getMonth() + 1;
             int anio = reserva.getFechaInicio().getYear() + 1900;
+            int horaFin = reserva.getHoraFin() + 1;
             texto = texto.concat("Fecha: " + reserva.getFechaInicio().getDate() + "/" +
                     mes + "/" + anio + "\nDe " + reserva.getHoraInicio() + "h a " +
-                    reserva.getHoraFin() + 1 + "h\n");
+                    reserva.getHoraFin() + "h\n");
         } else {
             int mesInicio = reserva.getFechaInicio().getMonth() + 1;
             int anioInicio = reserva.getFechaInicio().getYear() + 1900;
@@ -90,7 +91,7 @@ public class EnviarEmail {
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
-        //emailSender.send(message);
+        emailSender.send(message);
     }
 
 }

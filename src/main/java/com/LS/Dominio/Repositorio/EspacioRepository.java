@@ -24,28 +24,9 @@ public interface EspacioRepository extends CrudRepository<Espacio, String> {
 
     Optional<Espacio> findById (String id);
 
-    @Query(value = "SELECT e FROM Espacio e")
-    List<Espacio> obtenerTodos ();
-
     List<Espacio> findByUbicacionEdificioAndTipo (String edificio, String tipo);
 
-    List<Espacio> findByUbicacionEdificio (String edificio);
-
-    List<Espacio> findByTipo (String tipo);
-
-    @Query(value = "SELECT e FROM Espacio e WHERE e.capacidad > ?1")
-    List<Espacio> findByCapacidadMinima (int capacidad);
-
     @Query(value = "SELECT e FROM Espacio e WHERE e.ubicacion.edificio = ?1 AND " +
-            "e.capacidad > ?2")
-    List<Espacio> findByUbicacionEdificioAndCapacidadMinima (String edificio, int capacidad);
-
-    @Query(value = "SELECT e FROM Espacio e WHERE e.tipo = ?1 AND " +
-            "e.capacidad > ?2")
-    List<Espacio> findByTipoAndCapacidadMinima (String tipo, int capacidad);
-
-
-    @Query(value = "SELECT e FROM Espacio e WHERE e.ubicacion.edificio = ?1 AND " +
-            "e.tipo = ?2 AND e.capacidad > ?3")
+            "e.tipo = ?2 AND e.capacidad > ?3 AND e.reservable = true")
     List<Espacio> findByUbicacionEdificioAndTipoAndCapacidadMinima (String edificio, String tipo, int capacidad);
 }

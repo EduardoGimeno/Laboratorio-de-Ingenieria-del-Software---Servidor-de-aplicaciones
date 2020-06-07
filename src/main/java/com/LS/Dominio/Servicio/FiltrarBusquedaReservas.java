@@ -6,7 +6,7 @@ import com.LS.Dominio.Repositorio.EspacioRepository;
 import com.LS.Dominio.Repositorio.ReservaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import Enum.EstadoReserva;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,12 +22,13 @@ public class FiltrarBusquedaReservas {
     private ObtenerReservas obtenerReservas;
 
     public Collection<Reserva> filtrar (String edificio, String tipo, Timestamp fechaIni,
-                                        Timestamp fechaFin, int horaIni, int horaFin) {
+                                        Timestamp fechaFin, int horaIni, int horaFin,
+                                        EstadoReserva estado) {
         List<Reserva> reservasFitradas = new ArrayList<>();
         List<Espacio> espaciosFiltrados = espacioRepository.findByUbicacionEdificioAndTipo(edificio, tipo);
         for (Espacio espacio: espaciosFiltrados) {
             reservasFitradas.addAll(obtenerReservas.obtenerPorEspacioFechasYHoras(espacio.getId(), fechaIni,
-                    fechaFin, horaIni, horaFin));
+                    fechaFin, horaIni, horaFin, estado));
         }
         return reservasFitradas;
     }

@@ -29,40 +29,8 @@ public class FiltrarBusquedaEspacios {
 
     public Collection<Espacio> filtrar (BusquedaDTO busquedaDTO) {
         busquedaDTO = limpiarDatosIncorrectos(busquedaDTO);
-        List<Espacio> espacios = new ArrayList<>();
-        if (busquedaDTO.getEdificio().equals("null")) {
-            if (busquedaDTO.getTipoEspacio().equals("null")) {
-                if (busquedaDTO.getCapacidad() < 0) {
-                    espacios = espacioRepository.obtenerTodos();
-                } else {
-                    espacios = espacioRepository.findByCapacidadMinima(busquedaDTO.getCapacidad());
-                }
-            } else {
-                if (busquedaDTO.getCapacidad() < 0) {
-                    espacios = espacioRepository.findByTipo(busquedaDTO.getTipoEspacio());
-                } else {
-                    espacios = espacioRepository.findByTipoAndCapacidadMinima(
-                            busquedaDTO.getTipoEspacio(), busquedaDTO.getCapacidad());
-                }
-            }
-        } else {
-            if (busquedaDTO.getTipoEspacio().equals("null")) {
-                if (busquedaDTO.getCapacidad() < 0) {
-                    espacios = espacioRepository.findByUbicacionEdificio(busquedaDTO.getEdificio());
-                } else {
-                    espacios = espacioRepository.findByUbicacionEdificioAndCapacidadMinima(
-                            busquedaDTO.getEdificio(), busquedaDTO.getCapacidad());
-                }
-            } else {
-                if (busquedaDTO.getCapacidad() < 0) {
-                    espacios = espacioRepository.findByUbicacionEdificioAndTipo(
-                            busquedaDTO.getEdificio(), busquedaDTO.getTipoEspacio());
-                } else {
-                    espacios = espacioRepository.findByUbicacionEdificioAndTipoAndCapacidadMinima(
-                            busquedaDTO.getEdificio(), busquedaDTO.getTipoEspacio(), busquedaDTO.getCapacidad());
-                }
-            }
-        }
+        List<Espacio> espacios = espacioRepository.findByUbicacionEdificioAndTipoAndCapacidadMinima(
+                busquedaDTO.getEdificio(), busquedaDTO.getTipoEspacio(), busquedaDTO.getCapacidad());
         if (!busquedaDTO.getEquipamiento().isEmpty()) {
             espacios = filtrarPorEquipamiento(espacios,
                     busquedaDTO.getEquipamiento()

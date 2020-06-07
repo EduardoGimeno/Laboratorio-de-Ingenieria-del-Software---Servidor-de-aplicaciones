@@ -61,8 +61,9 @@ public class ObtenerReservas {
     }
 
     public List<Reserva> obtenerPorEspacioFechasYHoras(String idEspacio, Timestamp fechaIni,
-                                                  Timestamp fechaFin, int horaIni, int horaFin) {
-        return reservaRepository.findByEspacioFechasYHoras(idEspacio, EstadoReserva.PENDIENTE.getEstado(),
+                                                       Timestamp fechaFin, int horaIni, int horaFin,
+                                                       EstadoReserva estado) {
+        return reservaRepository.findByEspacioFechasYHoras(idEspacio, estado.getEstado(),
                 fechaIni, fechaFin, horaIni, horaFin);
     }
 
