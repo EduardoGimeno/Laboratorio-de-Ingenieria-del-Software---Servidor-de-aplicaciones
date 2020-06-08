@@ -111,16 +111,29 @@ public class Receptor{
                         .DTOAEntidad(mapper.readValue(mensajeArray[1], ReservaDTO.class))))));
             break;
 
+            //GERENTE PARA COMPROBAR CONCURRENCIA
+            case "obtenerReservaPorID":
+                jsonObject = new JSONObject(mensajeArray[1]);
+                Optional<Reserva> reservaOptional = obtenerReservas.
+                        obtenerReservaPorId(jsonObject.getString("id"));
+                if (reservaOptional.isPresent()) {
+                    devolverMensajes(mapper.writeValueAsString(reservaParser.
+                            entidadADTO(reservaOptional.get())));
+                } else {
+                    devolverMensajes("ERROR");
+                }
+                break;
+
             //GERENTE
             case "modificarEstadoReserva":
                 jsonObject = new JSONObject(mensajeArray[1]);
-                Optional<Reserva> reservaOptional = gestionReservas.cambiarEstado(
+                Optional<Reserva> reservaOptionalMod = gestionReservas.cambiarEstado(
                         jsonObject.getString("id"),
                         EstadoReserva.valueOf(jsonObject.getString("estado")),
                         jsonObject.getString("motivo"));
-                if (reservaOptional.isPresent()) {
+                if (reservaOptionalMod.isPresent()) {
                     devolverMensajes(mapper.writeValueAsString(
-                            reservaParser.entidadADTO(reservaOptional.get())));
+                            reservaParser.entidadADTO(reservaOptionalMod.get())));
                 } else {
                     devolverMensajes("ERROR");
                 }

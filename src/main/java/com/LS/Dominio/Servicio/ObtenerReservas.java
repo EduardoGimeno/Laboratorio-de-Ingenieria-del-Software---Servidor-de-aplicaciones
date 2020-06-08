@@ -21,12 +21,17 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ObtenerReservas {
 
     @Autowired
     private ReservaRepository reservaRepository;
+
+    public Optional<Reserva> obtenerReservaPorId(String id) {
+        return reservaRepository.findById(id);
+    }
 
     public List<Reserva> obtenerReservasEspacio(String idEspacio) {
         return reservaRepository.findByIdEspacio(idEspacio);
