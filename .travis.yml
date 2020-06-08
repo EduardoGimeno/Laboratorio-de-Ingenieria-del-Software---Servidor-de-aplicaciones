@@ -18,9 +18,9 @@ addons:
 #      secure: $SONAR_TOKEN # encrypted value of your token d005d02707dbd572bfcf6db1c1ae7e53da24bf51
 script:
   # other script steps might be done before running the actual analysis
-  #- ./gradlew clean build
-  #- ./gradlew test jacocoTestReport
-  - sonar-scanner -X
+  - ./gradlew clean build
+  - ./gradlew test jacocoTestReport
+  - sonar-scanner
 deploy:
   provider: heroku
   api_key: "$HEROKU_API_KEY"
