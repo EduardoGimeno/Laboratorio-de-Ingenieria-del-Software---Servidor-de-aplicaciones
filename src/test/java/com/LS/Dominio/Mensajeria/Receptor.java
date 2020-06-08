@@ -148,30 +148,6 @@ public class Receptor{
                         .collect(Collectors.toList())));
                 break;
 
-            //??
-            case "obtenerReservasEspacioEstado":
-                jsonObject = new JSONObject(mensajeArray[1]);
-                Collection<Reserva> reservasEspacioEstado = obtenerReservas
-                        .obtenerReservasEspacioEstado(
-                                jsonObject.getString("idEspacio"),
-                                EstadoReserva.valueOf(jsonObject.getString("estado")));
-                devolverMensajes(mapper.writeValueAsString(reservasEspacioEstado
-                        .stream()
-                        .map(reservaParser::entidadADTO)
-                        .collect(Collectors.toList())));
-                break;
-
-            //??
-            case "obtenerReservasEspacioFecha":
-                jsonObject = new JSONObject(mensajeArray[1]);
-                Collection<Reserva> reservasEspacioFecha = obtenerReservas
-                        .obtenerPorEspacioYFecha(jsonObject.getString("idEspacio"),
-                                new Timestamp(jsonObject.getLong("fecha")));
-                devolverMensajes(mapper.writeValueAsString(reservasEspacioFecha
-                        .stream()
-                        .map(reservaParser::entidadADTO)
-                        .collect(Collectors.toList())));
-                break;
 
             //USUARIO Y GERENTE
             case "obtenerHorarioEntreFechas":
