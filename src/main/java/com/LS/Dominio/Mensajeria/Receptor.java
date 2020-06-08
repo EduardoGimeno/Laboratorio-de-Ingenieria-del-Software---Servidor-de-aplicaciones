@@ -65,7 +65,6 @@ public class Receptor{
         ConnectionFactory factoria = new ConnectionFactory();
         String amqpURL = System.getenv(ENV_AMQPURL_NAME) != null ?
                 System.getenv().get(ENV_AMQPURL_NAME) : "amqp://localhost";
-                //System.getenv().get(ENV_AMQPURL_NAME) : "amqp://btguhxgi:IuGPcOaHN1LXeeXx4S0TfFMuFK50Y9hg@squid.rmq.cloudamqp.com/btguhxgi[19:31]CLOUDAMQP_URL";
         try {
             factoria.setUri(amqpURL);
         }  catch (Exception e) {
@@ -156,31 +155,6 @@ public class Receptor{
                 Collection<Reserva> reservasEstado = obtenerReservas
                         .obtenerReservasEstado(EstadoReserva.valueOf(jsonObject.getString("estado")));
                 devolverMensajes(mapper.writeValueAsString(reservasEstado
-                        .stream()
-                        .map(reservaParser::entidadADTO)
-                        .collect(Collectors.toList())));
-            break;
-
-            //??
-            case "obtenerReservasEspacioEstado":
-                jsonObject = new JSONObject(mensajeArray[1]);
-                Collection<Reserva> reservasEspacioEstado = obtenerReservas
-                        .obtenerReservasEspacioEstado(
-                                jsonObject.getString("idEspacio"),
-                                EstadoReserva.valueOf(jsonObject.getString("estado")));
-                devolverMensajes(mapper.writeValueAsString(reservasEspacioEstado
-                        .stream()
-                        .map(reservaParser::entidadADTO)
-                        .collect(Collectors.toList())));
-            break;
-
-            //??
-            case "obtenerReservasEspacioFecha":
-                jsonObject = new JSONObject(mensajeArray[1]);
-                Collection<Reserva> reservasEspacioFecha = obtenerReservas
-                        .obtenerPorEspacioYFecha(jsonObject.getString("idEspacio"),
-                                new Timestamp(jsonObject.getLong("fecha")));
-                devolverMensajes(mapper.writeValueAsString(reservasEspacioFecha
                         .stream()
                         .map(reservaParser::entidadADTO)
                         .collect(Collectors.toList())));
