@@ -20,4 +20,4 @@ script:
   # other script steps might be done before running the actual analysis
   - ./gradlew clean build
   - ./gradlew test jacocoTestReport
-  - sonar-scanner
+  - sonar-scanner -X
