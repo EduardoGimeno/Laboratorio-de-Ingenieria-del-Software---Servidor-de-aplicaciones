@@ -44,7 +44,7 @@ sonarqube {
 		property "sonar.projectKey", "UNIZAR-30249-2020-GRUPO02_Servidor-Aplicaciones"
 		property "sonar.organization", "unizar-30249-2020-grupo02"
 		property "sonar.host.url", "https://sonarcloud.io"
-		property "sonar.login", "d005d02707dbd572bfcf6db1c1ae7e53da24bf51"
+		//property "sonar.login", "d005d02707dbd572bfcf6db1c1ae7e53da24bf51"
 	}
 }
 
