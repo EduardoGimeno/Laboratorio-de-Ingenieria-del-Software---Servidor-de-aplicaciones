@@ -33,29 +33,6 @@ public class ObtenerReservas {
         return reservaRepository.findById(id);
     }
 
-    public List<Reserva> obtenerReservasEspacio(String idEspacio) {
-        return reservaRepository.findByIdEspacio(idEspacio);
-    }
-
-    public List<Reserva> obtenerReservasEstado(EstadoReserva estadoReserva) {
-        return reservaRepository.findByEstado(estadoReserva.getEstado());
-    }
-
-    public List<Reserva> obtenerReservasEspacioEstado(String idEspacio, EstadoReserva estadoReserva) {
-        return reservaRepository.findByIdEspacioAndEstado(idEspacio, estadoReserva.getEstado());
-    }
-
-    //??
-    public List<Reserva> obtenerPorEspacioYFecha(String idEspacio, Timestamp fecha) {
-        Timestamp dia = new Timestamp(fecha.getYear(), fecha.getMonth(),
-                fecha.getDate(), 0, 0, 0, 0);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(dia);
-        cal.add(Calendar.DATE, 1);
-        Timestamp diaSiguiente = new Timestamp(cal.getTime().getTime());
-        return reservaRepository.findByIdEspacioYEntreDosFechas(idEspacio, dia, diaSiguiente);
-    }
-
     public List<Reserva> obtenerPorEspacioFechaYDia(String idEspacio, Timestamp fecha) {
         Timestamp dia = new Timestamp(fecha.getYear(), fecha.getMonth(),
                 fecha.getDate(), 0, 0, 0, 0);
