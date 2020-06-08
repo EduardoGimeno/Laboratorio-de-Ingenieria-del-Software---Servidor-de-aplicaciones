@@ -13,11 +13,16 @@ cache:
     - $HOME/.gradle/wrapper/
 addons:
   sonarcloud:
-    organization: "UNIZAR-30249-2020-GRUPO02" # the key of the org you chose at step #3
-    token:
-      secure: "$SONAR_TOKEN" # encrypted value of your token
+    organization: unizar-30249-2020-grupo02 # the key of the org you chose at step #3
+#    token:
+#      secure: $SONAR_TOKEN # encrypted value of your token d005d02707dbd572bfcf6db1c1ae7e53da24bf51
 script:
   # other script steps might be done before running the actual analysis
   - ./gradlew clean build
   - ./gradlew test jacocoTestReport
   - sonar-scanner
+deploy:
+  provider: heroku
+  api_key: "$HEROKU_API_KEY"
+  app:
+    master: smartcampus-aplicacion
