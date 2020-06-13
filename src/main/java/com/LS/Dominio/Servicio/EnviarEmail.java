@@ -91,7 +91,7 @@ public class EnviarEmail {
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
-        //emailSender.send(message);
+        emailSender.send(message);
     }
 
 }
